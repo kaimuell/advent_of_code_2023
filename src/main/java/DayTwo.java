@@ -17,6 +17,11 @@ public class DayTwo {
         System.out.println("Day 2, Part 2 : " + result2);
     }
 
+    /**
+     * Solves https://adventofcode.com/2023/day/2#part1
+     * @param content the puzzle input
+     * @return the result
+     */
     private int solvePartOne(String content) {
         List<DayTwo.Game> games = parseInput(content);
         List<DayTwo.SetOfCubes> bounds = List.of(
@@ -27,7 +32,11 @@ public class DayTwo {
         List<DayTwo.Game> possibleGames = games.stream().filter(x -> x.isPossible(bounds)).toList();
         return sumGameIds(possibleGames);
     }
-
+    /**
+     * Solves https://adventofcode.com/2023/day/2#part2
+     * @param content the puzzle input
+     * @return the result
+     */
     private int solvePartTwo(String content) {
         List<DayTwo.Game> games = parseInput(content);
         return games.stream().map(Game::determinePower).reduce(0, Integer::sum);
@@ -65,9 +74,7 @@ public class DayTwo {
         return possibleGames.stream().map(Game::id).reduce(0, Integer::sum);
     }
 
-
     record SetOfCubes(int count, String color){}
-
 
     public record Game(int id, List<List<SetOfCubes>> plays) {
         public boolean isPossible(List<SetOfCubes> bounds) {
@@ -83,6 +90,10 @@ public class DayTwo {
             return true;
         }
 
+        /**
+         * determines the Power of the Minimal Set of Cubes
+         * @return the power
+         */
         public int determinePower() {
             Map<String, Integer> minimalSet = findMinimalSet();
             int result = 1;
@@ -90,6 +101,10 @@ public class DayTwo {
             return result;
         }
 
+        /**
+         * finds the minimal Set of cubes for the game
+         * @return tthe minimal set
+         */
         private Map<String, Integer> findMinimalSet() {
             Map<String, Integer> minColors = new HashMap<>();
             for (var p : plays){
