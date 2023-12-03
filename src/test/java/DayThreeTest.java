@@ -1,4 +1,3 @@
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Test;
 
 import java.io.File;
@@ -20,10 +19,24 @@ public class DayThreeTest {
         assertEquals(4, ((DayThree.ESNumber)engineSchema[0][0]).value);
         assertFalse (engineSchema[1][0] instanceof DayThree.ESSymbol );
         assertTrue(engineSchema[1][0] instanceof DayThree.ESNull);
-        List<Integer> numbersWithAdjacentSymbols = d.determineNumbersWithAdjacentSymbols(engineSchema);
+        List<DayThree.NumberAndPosition> numbersWithAdjacentSymbols = d.determineNumbersWithAdjacentSymbols(engineSchema);
         assertEquals(8, numbersWithAdjacentSymbols.size());
         assertEquals(4361, d.sumResult(numbersWithAdjacentSymbols));
 
         assertEquals(4361, d.solvePartOne(content));
+    }
+
+    @Test
+    public void testThreeTwo() throws IOException {
+        DayThree d = new DayThree();
+        Path path = new File("./src/test/resources/day_three_test_input.txt").toPath();
+        String content = Files.readString(path);
+        DayThree.EngineShemaElement[][] engineSchema = d.parseEngineSchema(content);
+        List<DayThree.NumberAndPosition> numbersWithAdjacentSymbols = d.determineNumbersWithAdjacentSymbols(engineSchema);
+        List<Integer> ratios = d.checkGearRatios(engineSchema, numbersWithAdjacentSymbols);
+        assertEquals(2, ratios.size());
+        int result = ratios.stream().reduce(0, Integer::sum);
+        assertEquals(467835, result);
+
     }
 }
