@@ -15,7 +15,7 @@ public class DayThreeTest {
         DayThree d = new DayThree();
         Path path = new File("./src/test/resources/day_three_test_input.txt").toPath();
         String content = Files.readString(path);
-        DayThree.EngineShemaElement[][] engineSchema = d.parseEngineSchema(content);
+        DayThree.EngineSchemaElement[][] engineSchema = d.parseEngineSchema(content);
         assertEquals(4, ((DayThree.ESNumber)engineSchema[0][0]).value);
         assertFalse (engineSchema[1][0] instanceof DayThree.ESSymbol );
         assertTrue(engineSchema[1][0] instanceof DayThree.ESNull);
@@ -31,7 +31,7 @@ public class DayThreeTest {
         DayThree d = new DayThree();
         Path path = new File("./src/test/resources/day_three_test_input.txt").toPath();
         String content = Files.readString(path);
-        DayThree.EngineShemaElement[][] engineSchema = d.parseEngineSchema(content);
+        DayThree.EngineSchemaElement[][] engineSchema = d.parseEngineSchema(content);
         List<DayThree.NumberAndPosition> numbersWithAdjacentSymbols = d.determineNumbersWithAdjacentSymbols(engineSchema);
         List<Integer> ratios = d.checkGearRatios(engineSchema, numbersWithAdjacentSymbols);
         assertEquals(2, ratios.size());

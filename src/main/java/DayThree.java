@@ -27,21 +27,21 @@ public class DayThree {
     }
 
     public int solvePartOne(String input) {
-        EngineShemaElement[][] engineSchema = this.parseEngineSchema(input);
+        EngineSchemaElement[][] engineSchema = this.parseEngineSchema(input);
         List<NumberAndPosition> numbersWithAdjacentSymbols = this.determineNumbersWithAdjacentSymbols(engineSchema);
         return this.sumResult(numbersWithAdjacentSymbols);
     }
 
     public int solvePartTwo(String input) {
-        EngineShemaElement[][] engineSchema = this.parseEngineSchema(input);
+        EngineSchemaElement[][] engineSchema = this.parseEngineSchema(input);
         List<NumberAndPosition> numbersWithAdjacentSymbols = this.determineNumbersWithAdjacentSymbols(engineSchema);
         List<Integer> gearRatios = checkGearRatios(engineSchema, numbersWithAdjacentSymbols);
         return gearRatios.stream().reduce(0, Integer::sum);
     }
 
-    public EngineShemaElement[][] parseEngineSchema(String content) {
+    public EngineSchemaElement[][] parseEngineSchema(String content) {
         List<String> lines = content.lines().toList();
-        EngineShemaElement[][] engineSchema = new EngineShemaElement[lines.size()][lines.getFirst().length()];
+        EngineSchemaElement[][] engineSchema = new EngineSchemaElement[lines.size()][lines.getFirst().length()];
         for (int i = 0; i < lines.size(); i++){
             for (int j = 0; j < lines.getFirst().length(); j++){
                 engineSchema[i][j] = determineFieldElement(lines.get(i).charAt(j));
@@ -50,14 +50,14 @@ public class DayThree {
         return engineSchema;
     }
 
-    private EngineShemaElement determineFieldElement(char c) {
+    private EngineSchemaElement determineFieldElement(char c) {
         if (c == '.') return new ESNull();
         if (Character.isDigit(c)) return new ESNumber(getNumericValue(c));
         return new ESSymbol(c);
     }
 
 
-    public List<NumberAndPosition> determineNumbersWithAdjacentSymbols(EngineShemaElement[][] engineSchema) {
+    public List<NumberAndPosition> determineNumbersWithAdjacentSymbols(EngineSchemaElement[][] engineSchema) {
         List<NumberAndPosition> numbers = new ArrayList<>();
         int currentNumber = -1; // -1 is default code for no number yet
         boolean hasNeighbor = false;
@@ -91,7 +91,7 @@ public class DayThree {
         return numbers;
     }
 
-    private boolean checkForNeighboringSymbols(EngineShemaElement[][] engineSchema, int i, int j) {
+    private boolean checkForNeighboringSymbols(EngineSchemaElement[][] engineSchema, int i, int j) {
         if (isInBounds(engineSchema, i-1, j) && engineSchema[i-1][j] instanceof ESSymbol) return true;
         if (isInBounds(engineSchema, i+1, j) && engineSchema[i+1][j] instanceof ESSymbol) return true;
         if (isInBounds(engineSchema, i-1, j+1) && engineSchema[i-1][j+1] instanceof ESSymbol) return true;
@@ -103,7 +103,7 @@ public class DayThree {
         return false;
     }
 
-    private static boolean isInBounds(EngineShemaElement[][] engineSchema, int i, int j) {
+    private static boolean isInBounds(EngineSchemaElement[][] engineSchema, int i, int j) {
         return i >= 0 && i < engineSchema.length && j >= 0 && j < engineSchema[i].length;
     }
 
@@ -111,7 +111,7 @@ public class DayThree {
         return integerList.stream().map(NumberAndPosition::value).reduce(0, Integer::sum);
     }
 
-    public List<Integer> checkGearRatios(EngineShemaElement[][] engineSchema, List<NumberAndPosition> numbersWithAdjacentSymbols) {
+    public List<Integer> checkGearRatios(EngineSchemaElement[][] engineSchema, List<NumberAndPosition> numbersWithAdjacentSymbols) {
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < engineSchema.length; i++) {
             for (int j = 0; j < engineSchema[i].length; j++) {
@@ -130,8 +130,8 @@ public class DayThree {
         return result;
     }
 
-    public interface EngineShemaElement{ }
-    public class ESNumber implements EngineShemaElement {
+    public interface EngineSchemaElement { }
+    public static class ESNumber implements EngineSchemaElement {
         public int value;
 
         public ESNumber(int value) {
@@ -139,23 +139,19 @@ public class DayThree {
         }
     }
 
-    public class ESSymbol implements EngineShemaElement{
+    public static class ESSymbol implements EngineSchemaElement {
         public char symbol;
 
         public ESSymbol(char symbol) {
             this.symbol = symbol;
         }
     }
-    public class ESNull implements EngineShemaElement{}
+    public static class ESNull implements EngineSchemaElement {}
 
     public record NumberAndPosition(int row, int start, int end, int value){
         boolean isNeighbor(int row, int col){
             if (this.row == row && (start == col+1 || end == col -1)) return true;
-            if (row == this.row-1 || row == this.row+1){
-                if (start -1 <= col && col <= end+1) return true;
-
-            }
-
+            if (row == this.row-1 || row == this.row+1) return start - 1 <= col && col <= end + 1;
             return false;
         }
     }
