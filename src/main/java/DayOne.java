@@ -17,7 +17,7 @@ public class DayOne {
         System.out.println("Day One, Quest One : " + result1);
 
         int result2 = solver.solveSecondQuest(input);
-        System.out.println("Day One, Quest two : " + result2);
+        System.out.println("Day One, Quest Two : " + result2);
     }
 
     /**
