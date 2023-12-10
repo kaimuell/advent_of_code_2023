@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,6 +23,9 @@ public class DayEight {
 
         long result1 = solver.solvePartOne();
         System.out.println(result1);
+
+        long result2 = solver.solvePartTwo();
+        System.out.println(result2);
     }
 
     public void parseInput(String content) {
@@ -55,6 +59,55 @@ public class DayEight {
                 }
             }
         }
+    }
+
+    public long solvePartTwo(){
+        List<String> startingPoints = wayMap.keySet().stream().filter(x -> x.endsWith("A")).toList();
+        List<Long> stepsTakenFromStartingPoints = startingPoints.stream().map(this::takeGhostPaths).toList();
+        return stepsTakenFromStartingPoints.stream().reduce(1L, DayEight::leastCommonMultiple);
+    }
+
+    private Long takeGhostPaths(String x) {
+        long counter = 0L;
+        String pos = x;
+        while (true){
+            for (int i = 0; i< pathInstruction.length(); i++){
+                if(pathInstruction.charAt(i) == 'L'){
+                    pos = wayMap.get(pos).left();
+                }else{
+                    pos = wayMap.get(pos).right();
+                }
+                counter++;
+                if (pos.endsWith("Z")){
+                    return counter;
+                }
+            }
+        }
+    }
+
+    /**
+     *  Determines the least common multiple of 2 Numbers
+     * <a href="http://www.programming-algorithms.net/article/42865/Least-common-multiple">Code Source</a>
+     * @param a the first number
+     * @param b the second number
+     * @return the least common multiple
+     */
+    public static long leastCommonMultiple(long a, long b) {
+        if (a == 0L || b == 0L ) return 0L;
+        return (a * b) / greatestCommonDivisor(a, b);
+    }
+
+    public static long greatestCommonDivisor(long a, long b) {
+        if (a < 1 || b < 1) {
+            throw new IllegalArgumentException("a or b is less than 1");
+        }
+        long remainder;
+        do {
+            remainder = a % b;
+            a = b;
+            b = remainder;
+        } while (b != 0);
+        return a;
     }
 }
 

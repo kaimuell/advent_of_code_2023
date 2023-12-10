@@ -19,5 +19,7 @@ public class DayEightTest {
         assertEquals(day.pathInstruction, "LLR");
 
         assertEquals(day.solvePartOne(), 6L);
+
+        assertEquals(6L, day.solvePartTwo());
     }
 }
