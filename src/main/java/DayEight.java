@@ -65,4 +65,4 @@ record PossibleWays(String left, String right){
         String r = lr[1].substring(0, 3);
         return new PossibleWays(l,r);
     }
-};
+}
