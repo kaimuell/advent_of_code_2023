@@ -23,5 +23,7 @@ public class DayElevenTest {
         assertTrue (day.linesWithoutGalaxies.contains(3));
         day.expandGalaxies();
         assertEquals(374, day.sumAllManhattanDistances());
+        assertEquals(1030, day.sumAllManhattanDistancesExpansion(10L));
+        assertEquals(8410, day.sumAllManhattanDistancesExpansion(100L));
     }
 }

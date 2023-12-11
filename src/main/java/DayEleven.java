@@ -25,6 +25,8 @@ public class DayEleven {
         solver.expandGalaxies();
         long result1 = solver.sumAllManhattanDistances();
         System.out.println("Day 11, Part 1: " + result1);
+        long result2 = solver.sumAllManhattanDistancesExpansion(1000000L);
+        System.out.println("Day 11, Part 2 " + result2);
     }
 
     public void parseInput(String content) {
@@ -34,7 +36,7 @@ public class DayEleven {
             boolean lineHasNoGalxies = true;
             for (int j = 0; j < line.length(); j++){
                 if (line.charAt(j) == '#'){
-                    this.galaxies.add(new GalaxiePoint(j,i));
+                    this.galaxies.add(new GalaxiePoint(j, i));
                     lineHasNoGalxies = false;
                 }
             }
@@ -48,8 +50,8 @@ public class DayEleven {
     private void findColsWithoutGalaxies(List<String> lines) {
         for (int j = 0; j < lines.get(0).length(); j++) {
             boolean rowHasNoGalaxy = true;
-            for (int i = 0; i < lines.size(); i++) {
-                if (lines.get(i).charAt(j) == '#') {
+            for (String line : lines) {
+                if (line.charAt(j) == '#') {
                     rowHasNoGalaxy = false;
                     break;
                 }
@@ -85,34 +87,37 @@ public class DayEleven {
     }
 
     public long sumAllManhattanDistances() {
+        return sumAllManhattanDistancesExpansion(2L);
+    }
+    public long sumAllManhattanDistancesExpansion(long offset) {
         long result = 0L;
         for (int i=0; i < galaxies.size(); i++){
             for (int j = i+1; j < galaxies.size(); j++){
-                result += manhattandistance(galaxies.get(i), galaxies.get(j));
+                result += manhattanDistance(galaxies.get(i), galaxies.get(j), offset);
             }
         }
         return result;
     }
 
-    public long manhattandistance(GalaxiePoint p1, GalaxiePoint p2) {
-        return Math.abs(p1.getXAfterExpansion()-p2.getXAfterExpansion()) + Math.abs(p1.getYAfterExpansion()-p2.getYAfterExpansion());
 
+    public long manhattanDistance(GalaxiePoint p1, GalaxiePoint p2, long offset) {
+        return Math.abs(p1.getXAfterExpansion(offset)-p2.getXAfterExpansion(offset))
+                + Math.abs(p1.getYAfterExpansion(offset)-p2.getYAfterExpansion(offset));
     }
 
-    public class GalaxiePoint extends Point{
-        int expandedX = 0;
-        int expandedY = 0;
+    public static class GalaxiePoint extends Point{
+        long expandedX = 0;
+        long expandedY = 0;
 
         public GalaxiePoint(int x, int y) {
             super(x, y);
         }
 
-        public int getXAfterExpansion() {
-            return this.x + expandedX;
+        public long getXAfterExpansion(long offset) {
+            return (long) this.x + (expandedX * (offset-1));
         }
-        public int getYAfterExpansion(){
-            return this.y + expandedY;
+        public long getYAfterExpansion(Long offset){
+            return (long) this.y + (expandedY * (offset-1));
         }
-
     }
 }
