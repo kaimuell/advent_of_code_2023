@@ -8,11 +8,11 @@ import java.util.*;
 /**
  * Solves <a href="https://adventofcode.com/2023/day/4">Advent of Code Day 4</a>
  */
-public class DayFour {
+public class Day04 {
 
     public static void main(String[] args) throws IOException {
-        DayFour solver= new DayFour();
-        Path path = new File("src/main/resources/day_four_input.txt").toPath();
+        Day04 solver= new Day04();
+        Path path = new File("src/main/resources/day_04_input.txt").toPath();
         String content = Files.readString(path);
         int points = solver.solvePartOne(content);
         System.out.println("Day 3, Part 1 : " + points);
@@ -22,7 +22,7 @@ public class DayFour {
     }
 
     private int solvePartTwo(String content) {
-        List<DayFour.Card> cards = parseCards(content);
+        List<Day04.Card> cards = parseCards(content);
         int[] cardsWithCopies = createCopies(cards);
         return Arrays.stream(cardsWithCopies).sum();
     }

@@ -8,20 +8,20 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class DayTwoTest {
+public class Day02Test {
 
     @Test
     public void testTwoOne() throws IOException {
-        DayTwo d = new DayTwo();
-        Path path = new File("src/test/resources/day_two_test_input.txt").toPath();
+        Day02 d = new Day02();
+        Path path = new File("src/test/resources/day_02_test_input.txt").toPath();
         String content = Files.readString(path);
-        List<DayTwo.Game> games = d.parseInput(content);
-        List<DayTwo.SetOfCubes> bounds = List.of(
-                new DayTwo.SetOfCubes(12, "red"),
-                new DayTwo.SetOfCubes(13, "green"),
-                new DayTwo.SetOfCubes(14, "blue")
+        List<Day02.Game> games = d.parseInput(content);
+        List<Day02.SetOfCubes> bounds = List.of(
+                new Day02.SetOfCubes(12, "red"),
+                new Day02.SetOfCubes(13, "green"),
+                new Day02.SetOfCubes(14, "blue")
                 );
-        List<DayTwo.Game> possibleGames = games.stream().filter(x -> x.isPossible(bounds)).toList();
+        List<Day02.Game> possibleGames = games.stream().filter(x -> x.isPossible(bounds)).toList();
         assertEquals(3, possibleGames.size());
         int result1 = d.sumGameIds(possibleGames);
         assertEquals(8,result1);
@@ -29,11 +29,11 @@ public class DayTwoTest {
 
     @Test
     public void testTwoTwo() throws IOException {
-        DayTwo d = new DayTwo();
-        Path path = new File("src/test/resources/day_two_test_input.txt").toPath();
+        Day02 d = new Day02();
+        Path path = new File("src/test/resources/day_02_test_input.txt").toPath();
         String content = Files.readString(path);
-        List<DayTwo.Game> games = d.parseInput(content);
-        List<Integer> powers = games.stream().map(DayTwo.Game::determinePower).toList();
+        List<Day02.Game> games = d.parseInput(content);
+        List<Integer> powers = games.stream().map(Day02.Game::determinePower).toList();
         assertEquals(48, powers.getFirst().intValue());
         assertEquals(36, powers.getLast().intValue());
         int power = powers.stream().reduce(0, Integer::sum);

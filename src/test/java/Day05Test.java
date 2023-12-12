@@ -9,17 +9,17 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class DayFiveTest {
+public class Day05Test {
     @Test
     public void testPartOne() throws IOException {
-        DayFive day= new DayFive();
-        Path path = new File("src/test/resources/day_five_test_input.txt").toPath();
+        Day05 day= new Day05();
+        Path path = new File("src/test/resources/day_05_test_input.txt").toPath();
         String content = Files.readString(path);
         day.parseInput(content);
 
         assertEquals(4, day.seeds.size());
         assertEquals(2, day.maps.getFirst().size());
-        DayFive.MapEntry firstMap = day.maps.getFirst().getFirst();
+        Day05.MapEntry firstMap = day.maps.getFirst().getFirst();
 
         assert (10L == firstMap.mapNumber(10L));
         assert (50L ==  firstMap.mapNumber(98L));

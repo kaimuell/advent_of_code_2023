@@ -5,24 +5,23 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class DayTenTest {
+public class Day10Test {
 
     @Test
     public void testDayTen() throws IOException {
-        DayTen d = new DayTen();
-        Path path = new File("./src/test/resources/day_ten_test_input.txt").toPath();
+        Day10 d = new Day10();
+        Path path = new File("./src/test/resources/day_10_test_input.txt").toPath();
         String content = Files.readString(path);
         d.parseInput(content);
         assertEquals(d.startPos, new Point(0,2));
         assertNotNull(d.pipes);
         assertEquals(d.pipes.length, 5);
         assertEquals(d.pipes[0].length, 5);
-        assertTrue(d.pipes[d.startPos.x][d.startPos.y].directions.contains(Direction.SOUTH));
-        assertTrue(d.pipes[d.startPos.x][d.startPos.y].directions.contains(Direction.EAST));
+        assertTrue(d.pipes[d.startPos.x][d.startPos.y].directions.contains(Day10.Direction.SOUTH));
+        assertTrue(d.pipes[d.startPos.x][d.startPos.y].directions.contains(Day10.Direction.EAST));
         d.breathFirstSearch();
         long result = d.getAllPipesAsList().stream().reduce(0L, Long::max);
         assertEquals(8, result);

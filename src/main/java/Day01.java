@@ -5,13 +5,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DayOne {
+public class Day01 {
 
 
 
     public static void main(String[] args) throws IOException {
-        DayOne solver = new DayOne();
-        Path input = new File("src/main/resources/day_one_input.txt").toPath();
+        Day01 solver = new Day01();
+        Path input = new File("src/main/resources/day_01_input.txt").toPath();
 
         int result1 = solver.solveFirstQuest(input);
         System.out.println("Day One, Quest One : " + result1);

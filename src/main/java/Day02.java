@@ -4,11 +4,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public class DayTwo {
+public class Day02 {
 
     public static void main(String[] args) throws IOException {
-        DayTwo solver = new DayTwo();
-        Path path = new File("src/main/resources/day_two_input.txt").toPath();
+        Day02 solver = new Day02();
+        Path path = new File("src/main/resources/day_02_input.txt").toPath();
         String content = Files.readString(path);
         int result1 = solver.solvePartOne(content);
         System.out.println("Day 2, Part 1 : " + result1);
@@ -23,13 +23,13 @@ public class DayTwo {
      * @return the result
      */
     private int solvePartOne(String content) {
-        List<DayTwo.Game> games = parseInput(content);
-        List<DayTwo.SetOfCubes> bounds = List.of(
-                new DayTwo.SetOfCubes(12, "red"),
-                new DayTwo.SetOfCubes(13, "green"),
-                new DayTwo.SetOfCubes(14, "blue")
+        List<Day02.Game> games = parseInput(content);
+        List<Day02.SetOfCubes> bounds = List.of(
+                new Day02.SetOfCubes(12, "red"),
+                new Day02.SetOfCubes(13, "green"),
+                new Day02.SetOfCubes(14, "blue")
         );
-        List<DayTwo.Game> possibleGames = games.stream().filter(x -> x.isPossible(bounds)).toList();
+        List<Day02.Game> possibleGames = games.stream().filter(x -> x.isPossible(bounds)).toList();
         return sumGameIds(possibleGames);
     }
     /**
@@ -38,7 +38,7 @@ public class DayTwo {
      * @return the result
      */
     private int solvePartTwo(String content) {
-        List<DayTwo.Game> games = parseInput(content);
+        List<Day02.Game> games = parseInput(content);
         return games.stream().map(Game::determinePower).reduce(0, Integer::sum);
     }
 

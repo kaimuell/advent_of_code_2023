@@ -7,12 +7,12 @@ import java.nio.file.Path;
 
 import static org.junit.Assert.assertEquals;
 
-public class DayNineTest {
+public class Day09Test {
 
     @Test
     public void testPartOne() throws IOException {
-        DayNine d = new DayNine();
-        Path path = new File("src/test/resources/day_nine_test_input.txt").toPath();
+        Day09 d = new Day09();
+        Path path = new File("src/test/resources/day_09_test_input.txt").toPath();
         String content = Files.readString(path);
         d.parseInput(content);
 

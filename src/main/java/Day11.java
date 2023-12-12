@@ -12,14 +12,14 @@ import java.util.Set;
 /**
  * Solves <a href="https://adventofcode.com/2023/day/11">Advent of Code 2023, Day 11</a>
  */
-public class DayEleven {
+public class Day11 {
     List<GalaxiePoint> galaxies = new ArrayList<>();
     Set<Integer> linesWithoutGalaxies = new HashSet<>();
     Set<Integer> colsWithoutGalaxies = new HashSet<>();
 
     public static void main(String[] args) throws IOException {
-        DayEleven solver= new DayEleven();
-        Path path = new File("src/main/resources/day_eleven_input.txt").toPath();
+        Day11 solver= new Day11();
+        Path path = new File("src/main/resources/day_11_input.txt").toPath();
         String content = Files.readString(path);
         solver.parseInput(content);
         solver.expandGalaxies();

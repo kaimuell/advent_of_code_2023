@@ -8,12 +8,12 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class DayOneTest {
+public class Day01Test {
 
     @Test
     public void testOneOne() throws IOException {
-        DayOne day= new DayOne();
-        Path path = new File("src/test/resources/day_one_test_input.txt").toPath();
+        Day01 day= new Day01();
+        Path path = new File("src/test/resources/day_01_test_input.txt").toPath();
         String content = Files.readString(path);
         List<Integer> numbers = day.filterDigitsAndConcatenateFirstAndLast(content);
         assertEquals(12, numbers.get(0).intValue());
@@ -25,8 +25,8 @@ public class DayOneTest {
 
     @Test
     public void testOneTwo() throws IOException {
-        DayOne day= new DayOne();
-        Path path = new File("src/test/resources/day_one_test_input2.txt").toPath();
+        Day01 day= new Day01();
+        Path path = new File("src/test/resources/day_01_test_input2.txt").toPath();
         String content = Files.readString(path);
         List<Integer> extendedNumbers = day.filterDigitsAndConcatenateFirstAndLastExtended(content);
         assertEquals(29, extendedNumbers.get(0).intValue());

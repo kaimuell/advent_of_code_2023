@@ -9,12 +9,12 @@ import java.util.*;
 /**
  * Solves <a href="https://adventofcode.com/2023/day/9">Advent of Code 2023 - Day Nine</a>
  */
-public class DayNine {
+public class Day09 {
     List<SensorReading> readings;
 
     public static void main(String[] args) throws IOException {
-        DayNine solver = new DayNine();
-        Path path = new File("src/main/resources/day_nine_input.txt").toPath();
+        Day09 solver = new Day09();
+        Path path = new File("src/main/resources/day_09_input.txt").toPath();
         String content = Files.readString(path);
         solver.parseInput(content);
 
@@ -26,7 +26,7 @@ public class DayNine {
     }
 
     private long solvePartOne() {
-        for (var x: readings){
+        for (var x : readings) {
             x.expand();
         }
         return sumLastNumbers();
@@ -56,18 +56,19 @@ public class DayNine {
         }
         return result;
     }
-}
 
-    class SensorReading{
+
+    public static class SensorReading {
         public List<List<Long>> sequences = new ArrayList<>();
+
         public static SensorReading fromLine(String s) {
-            SensorReading sr = new SensorReading();
+            SensorReading sr = new Day09.SensorReading();
             List<Long> l = ParsingUtils.tryToParseAllNumbers(s.split(" "));
             sr.sequences.add(l);
             return sr;
         }
 
-        public void expand(){
+        public void expand() {
             extractDifferences();
             predictNextNumber();
             predictFormerNumber();
@@ -75,28 +76,27 @@ public class DayNine {
 
         private void predictNextNumber() {
             sequences.getLast().add(0L);
-            for (int i = sequences.size()-2; i >= 0; i--){
-                Long div = sequences.get(i+1).getLast();
+            for (int i = sequences.size() - 2; i >= 0; i--) {
+                Long div = sequences.get(i + 1).getLast();
                 Long n = sequences.get(i).getLast();
-                sequences.get(i).add(n+div);
+                sequences.get(i).add(n + div);
             }
         }
 
-        private void predictFormerNumber(){
+        private void predictFormerNumber() {
             reverseAllSequeces();
             sequences.getLast().add(0L);
-            for (int i = sequences.size()-2; i >= 0; i--){
-                Long div = sequences.get(i+1).getLast();
+            for (int i = sequences.size() - 2; i >= 0; i--) {
+                Long div = sequences.get(i + 1).getLast();
                 Long n = sequences.get(i).getLast();
-                sequences.get(i).add(n-div);
+                sequences.get(i).add(n - div);
             }
             reverseAllSequeces();
         }
-
 
 
         private void reverseAllSequeces() {
-            for (var x : sequences){
+            for (var x : sequences) {
                 Collections.reverse(x);
             }
         }
@@ -110,8 +110,8 @@ public class DayNine {
             while (!allZeroes) {
                 var actList = sequences.getLast();
                 List<Long> l = new ArrayList<>();
-                for (int i = 0; i< actList.size()-1; i++){
-                    l.add(actList.get(i+1) - actList.get(i));
+                for (int i = 0; i < actList.size() - 1; i++) {
+                    l.add(actList.get(i + 1) - actList.get(i));
                 }
                 sequences.add(l);
                 allZeroes = l.stream().allMatch(x -> x == 0L);
@@ -120,3 +120,4 @@ public class DayNine {
 
 
     }
+}

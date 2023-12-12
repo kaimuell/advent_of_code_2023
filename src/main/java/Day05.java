@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DayFive {
+public class Day05 {
 
     public List<Long> seeds;
     public List<List<MapEntry>> maps;
 
     public static void main(String[] args) throws IOException {
-        DayFive solver= new DayFive();
-        Path path = new File("src/main/resources/day_five_input.txt").toPath();
+        Day05 solver= new Day05();
+        Path path = new File("src/main/resources/day_05_input.txt").toPath();
         String content = Files.readString(path);
         solver.parseInput(content);
         Long result = solver.solvePartOne();

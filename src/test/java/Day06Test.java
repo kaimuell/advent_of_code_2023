@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class DaySixTest {
+public class Day06Test {
 
     @Test
     public void testPartOne() throws IOException {
-        DaySix day = new DaySix();
-        Path path = new File("src/test/resources/day_six_test_input.txt").toPath();
+        Day06 day = new Day06();
+        Path path = new File("src/test/resources/day_06_test_input.txt").toPath();
         String content = Files.readString(path);
         day.parseInput(content);
         Assertions.assertEquals(3, day.distances.size());

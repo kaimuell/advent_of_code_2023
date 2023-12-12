@@ -11,13 +11,13 @@ import static utils.ParsingUtils.tryToParseAllNumbers;
  * Solves <a href="https://adventofcode.com/2023/day/6">Advent of Code Day 6</a>
  */
 
-public class DaySix {
+public class Day06 {
     public List<Long> times;
     public List<Long> distances;
 
     public static void main(String[] args) throws IOException {
-        DaySix solver = new DaySix();
-        Path path = new File("src/main/resources/day_six_input.txt").toPath();
+        Day06 solver = new Day06();
+        Path path = new File("src/main/resources/day_06_input.txt").toPath();
         String content = Files.readString(path);
         solver.parseInput(content);
 

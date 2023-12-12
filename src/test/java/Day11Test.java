@@ -9,12 +9,12 @@ import java.nio.file.Path;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class DayElevenTest {
+public class Day11Test {
     @Test
     public void testDay() throws IOException {
 
-        DayEleven day = new DayEleven();
-        Path path = new File("src/test/resources/day_eleven_test_input.txt").toPath();
+        Day11 day = new Day11();
+        Path path = new File("src/test/resources/day_11_test_input.txt").toPath();
         String content = Files.readString(path);
         day.parseInput(content);
         assertTrue(day.galaxies.contains(new Point(0,2)));

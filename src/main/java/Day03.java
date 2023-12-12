@@ -11,11 +11,11 @@ import static java.lang.Character.getNumericValue;
 /**
  * Solution to https://adventofcode.com/2023/day/3
  */
-public class DayThree {
+public class Day03 {
 
     public static void main(String[] args) throws IOException {
-        DayThree solver = new DayThree();
-        Path path = new File("src/main/resources/day_three_input.txt").toPath();
+        Day03 solver = new Day03();
+        Path path = new File("src/main/resources/day_03_input.txt").toPath();
         String input = Files.readString(path);
 
         int result1 = solver.solvePartOne(input);
