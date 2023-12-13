@@ -63,7 +63,7 @@ public class Day09 {
 
         public static SensorReading fromLine(String s) {
             SensorReading sr = new Day09.SensorReading();
-            List<Long> l = ParsingUtils.tryToParseAllNumbers(s.split(" "));
+            List<Long> l = ParsingUtils.tryToParseAllNumbersAsLong(s.split(" "));
             sr.sequences.add(l);
             return sr;
         }

@@ -30,7 +30,7 @@ public class Day05 {
     public void parseInput(String content) {
         List<String> lines = content.lines().toList();
         String[] firstLine = lines.get(0).split(" ");
-        List<Long> seeds = ParsingUtils.tryToParseAllNumbers(firstLine);
+        List<Long> seeds = ParsingUtils.tryToParseAllNumbersAsLong(firstLine);
         List<List<MapEntry>> maps = new ArrayList<>();
         List<MapEntry> entries = null;
         for (int i = 1 ; i < lines.size(); i++){
@@ -39,7 +39,7 @@ public class Day05 {
                 entries = new ArrayList<>();
                 i++;
             } else {
-                List<Long> number = ParsingUtils.tryToParseAllNumbers(lines.get(i).split(" "));
+                List<Long> number = ParsingUtils.tryToParseAllNumbersAsLong(lines.get(i).split(" "));
                 MapEntry entry = new MapEntry(number.get(0), number.get(1), number.get(2));
                 entries.add(entry);
             }

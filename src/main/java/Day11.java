@@ -112,7 +112,6 @@ public class Day11 {
         public GalaxiePoint(int x, int y) {
             super(x, y);
         }
-
         public long getXAfterExpansion(long offset) {
             return (long) this.x + (expandedX * (offset-1));
         }

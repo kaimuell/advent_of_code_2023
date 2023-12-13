@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static utils.ParsingUtils.tryToParseAllNumbers;
+import static utils.ParsingUtils.tryToParseAllNumbersAsLong;
 
 
 /**
@@ -30,8 +30,8 @@ public class Day06 {
 
     public void parseInput(String content) {
         List<String> lines = content.lines().toList();
-        this.times = tryToParseAllNumbers(lines.get(0).split(" "));
-        this.distances = tryToParseAllNumbers(lines.get(1).split(" "));
+        this.times = tryToParseAllNumbersAsLong(lines.get(0).split(" "));
+        this.distances = tryToParseAllNumbersAsLong(lines.get(1).split(" "));
     }
 
     public long computePossibleWins(Long time, Long distance) {
