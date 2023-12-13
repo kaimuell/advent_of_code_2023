@@ -28,8 +28,13 @@ public class Day12Test {
         Day12.SpringCondition sc = new Day12.SpringCondition("#.#.###", List.of(1,1,3));
         Day12.SpringCondition scuf = sc.toUnfolded();
         assertEquals(scuf.sizes().size(), 3*5);
-        assertEquals(scuf.springs().length(), sc.springs().length()*5);
+        assertEquals(scuf.springs().length(), sc.springs().length()*5 +4);
+
+        Day12.SpringCondition sc1 = new Day12.SpringCondition("???.###", List.of(1,1,3));
+        Day12.SpringCondition sc1f = sc1.toUnfolded();
+        assertEquals("???.###????.###????.###????.###????.###", sc1f.springs());
+        assertEquals(List.of(1,1,3,1,1,3,1,1,3,1,1,3,1,1,3), sc1f.sizes());
         day.unfoldAllSpringConditions();
-        assertEquals(525152, day.bruteForcePossibilities());
+        assertEquals(525152, day.bfRecursive());
     }
 }

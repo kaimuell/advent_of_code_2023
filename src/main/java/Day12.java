@@ -5,6 +5,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Solves <a href="https://adventofcode.com/2023/day/12">Advent of Code 2023, Day 12</a>
+ * ATTENTION it takes really long for part 2
+ */
+
 public class Day12 {
     List<SpringCondition> springConditions;
 
@@ -15,6 +20,10 @@ public class Day12 {
         solver.parseInput(content);
         long result = solver.bruteForcePossibilities();
         System.out.println("Day 12, Part 1 : " + result);
+
+        solver.unfoldAllSpringConditions();
+        long result2 = solver.bfRecursive();
+        System.out.println("Day 12, Part 2 : " + result2);
     }
     public void parseInput(String content) {
         this.springConditions = content.lines().map(SpringCondition::fromLine).toList();
@@ -58,13 +67,6 @@ public class Day12 {
         return true;
     }
 
-    private boolean consistsOfHastagsAndQuestionMarks(String substring) {
-        long length = substring.length();
-        long hashtags = substring.chars().filter(x -> x == '#').count();
-        long questionmarks = substring.chars().filter(x -> x == '?').count();
-        return length == hashtags + questionmarks;
-    }
-
     public long bruteForcePossibilities(){
         long result = 0;
         for (var condition : springConditions){
@@ -76,7 +78,12 @@ public class Day12 {
         return result;
     }
 
-    //Creates All Conditions without checks for if it is possible in the meantime (VERY UNEFFICIENT!!!!)
+    public long bfRecursive(){
+        return springConditions.parallelStream()
+                .map(x-> expandRecursive(x.springs(), x.sizes()))
+                .reduce(Long::sum).orElseThrow();
+    }
+
     private List<String> expandConditions(String springs, List<Integer> sizes) {
         List<String> act = List.of(springs);
         if (!springs.contains("?")) return List.of(springs);
@@ -96,7 +103,7 @@ public class Day12 {
                     }
                 }
             }
-            if (nextIter.stream().allMatch(x-> !x.contains("?"))) return nextIter;
+            if (nextIter.stream().noneMatch(x-> x.contains("?"))) return nextIter;
             int finalActchar = actchar;
             nextIter = nextIter.stream()
                     .filter(x-> hasToManyHashTags(x, maxHastags))
@@ -105,12 +112,36 @@ public class Day12 {
             act = nextIter;
         }
     }
+
+    public long expandRecursive(String springs, List<Integer> sizes){
+        if (!springs.contains("?")) return checkIsValid(springs, sizes) ? 1L : 0L;
+        long count = 0L;
+        int firstquestionmark = 0;
+        for (int i= 0; i< springs.length(); i++){
+            if (springs.charAt(i) == '?') {
+                firstquestionmark = i;
+                break;
+            }
+        }
+        String left = springs.substring(0, firstquestionmark + 1).replace('?', '.')
+                + (firstquestionmark < springs.length() - 1 ? springs.substring(firstquestionmark + 1) : "");
+
+        String right = springs.substring(0, firstquestionmark + 1).replace('?', '#')
+                + (firstquestionmark < springs.length() - 1 ? springs.substring(firstquestionmark + 1) : "");
+
+        if (checkIsValidTill(left, sizes, firstquestionmark)){
+            count += expandRecursive(left, sizes);
+        }
+        if (checkIsValidTill(left, sizes, firstquestionmark)){
+            count += expandRecursive(right, sizes);
+        }
+        return count;
+    }
     private boolean hasToManyHashTags(String s, int maxHashtags) {
         int count = (int) s.chars().filter(x -> x == '#').count();
         int questionMarks = (int) s.chars().filter(x -> x == '?').count();
         if (count > maxHashtags) return false; //to many hashtags
-        if (count + questionMarks < maxHashtags) return false; // to many dots
-        return true;
+        return count + questionMarks >= maxHashtags; // to many dots
     }
 
     public void unfoldAllSpringConditions() {
@@ -124,10 +155,12 @@ public class Day12 {
             return new SpringCondition(parts[0], utils.ParsingUtils.tryToParseAllNumbersAsInteger(parts[1].split(",")));
         }
         SpringCondition toUnfolded(){
-            List<Integer> unfoldedSizes = new ArrayList<>();
             StringBuilder sb = new StringBuilder();
-            for (int i = 0 ; i < 5; i++){
+            sb.append(springs);
+            List<Integer> unfoldedSizes = new ArrayList<>(sizes);
+            for (int i = 1 ; i < 5; i++){
                 unfoldedSizes.addAll(sizes);
+                sb.append("?");
                 sb.append(springs);
             }
             return new SpringCondition(sb.toString(), unfoldedSizes);
