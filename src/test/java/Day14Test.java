@@ -20,6 +20,13 @@ public class Day14Test{
         assertEquals('O', day.rocks[0][2]);
         utils.ArrayUtils.print(day.rocks);
         assertEquals(136, day.countWeight());
+        day.parseInput(content);
+        day.rollCycles(1);
+        System.out.println();
+        utils.ArrayUtils.print(day.rocks);
+        day.parseInput(content);
+        day.rollCycles(1000000000);
+        //assertEquals(64, day.countWeight());
 
     }
 }
