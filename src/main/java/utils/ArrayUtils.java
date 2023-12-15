@@ -16,4 +16,17 @@ public class ArrayUtils {
             System.out.println();
         }
     }
+
+    public static String toString(char[][] rocks) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 1; i < rocks.length; i++) {
+            for (int j = 0; j < rocks[i].length; j++) {
+                sb.append(rocks[i][j]);
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
 }
