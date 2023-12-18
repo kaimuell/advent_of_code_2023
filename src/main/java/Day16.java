@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +26,11 @@ public class Day16 {
         solver.illuminateFrom(0,0, EAST);
         long result1 = solver.countIlluminatedTiles();
         System.out.println("Day 16, Part 1 : " + result1);
+        solver.reset();
+        long result2 = solver.maxOfAllConfigurations();
+        System.out.println("Day 16, Part 2 : " + result2);
+
+        
     }
 
     public void parseInput(String content) {
@@ -69,6 +75,47 @@ public class Day16 {
 
     private boolean isInbounds(int row, int col, TileElement[][] tiles) {
         return row >= 0 && col >= 0 && row < tiles.length && col < tiles[0].length;
+    }
+
+    public long maxOfAllConfigurations() {
+        List<Long> results = new ArrayList<>();
+        //Upper Tiles
+        for (int i = 0; i< tiles[0].length; i++){
+            reset();
+            illuminateFrom(0,i, SOUTH);
+            results.add(countIlluminatedTiles());
+        }
+        //Left Tiles
+        for (int i = 0; i< tiles.length; i++){
+            reset();
+            illuminateFrom(i,0, EAST);
+            results.add(countIlluminatedTiles());
+        }
+        //Bottom Tiles
+        for (int i = 0; i< tiles[0].length; i++){
+            reset();
+            illuminateFrom(tiles.length-1, i, NORTH);
+            results.add(countIlluminatedTiles());
+        }
+        //Right Tiles
+        for (int i = 0; i< tiles.length; i++){
+            reset();
+            illuminateFrom(i,tiles[0].length-1, WEST);
+            results.add(countIlluminatedTiles());
+        }
+
+        return results.stream().reduce(0L, Long::max).longValue();
+    }
+
+    private void reset() {
+        this.illuminated = new boolean[tiles.length][tiles[0].length];
+        Set<Direction>[][] visitedFromDirection = new Set[tiles.length][tiles[0].length];
+        for (int i = 0; i < visitedFromDirection.length; i++) {
+            for (int j = 0; j < visitedFromDirection[i].length; j++) {
+                visitedFromDirection[i][j] = new HashSet<>();
+            }
+        }
+        this.visitedFromDirection = visitedFromDirection;
     }
 
     static class TileElementFactory{

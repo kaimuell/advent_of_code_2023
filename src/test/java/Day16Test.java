@@ -21,5 +21,10 @@ public class Day16Test {
         day.illuminateFrom(0,0, Direction.EAST);
         System.out.println(utils.ArrayUtils.toString(day.illuminated));
         assertEquals(46L, day.countIlluminatedTiles());
+
+        day.parseInput(content);
+        day.illuminateFrom(0,3,Direction.SOUTH);
+        assertEquals(51L, day.countIlluminatedTiles());
+        assertEquals(51L, day.maxOfAllConfigurations());
     }
 }
