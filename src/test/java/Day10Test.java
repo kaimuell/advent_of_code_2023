@@ -1,4 +1,5 @@
 import org.junit.Test;
+import utils.Direction;
 
 import java.awt.*;
 import java.io.File;
@@ -20,8 +21,8 @@ public class Day10Test {
         assertNotNull(d.pipes);
         assertEquals(d.pipes.length, 5);
         assertEquals(d.pipes[0].length, 5);
-        assertTrue(d.pipes[d.startPos.x][d.startPos.y].directions.contains(Day10.Direction.SOUTH));
-        assertTrue(d.pipes[d.startPos.x][d.startPos.y].directions.contains(Day10.Direction.EAST));
+        assertTrue(d.pipes[d.startPos.x][d.startPos.y].directions.contains(Direction.SOUTH));
+        assertTrue(d.pipes[d.startPos.x][d.startPos.y].directions.contains(Direction.EAST));
         d.breathFirstSearch();
         long result = d.getAllPipesAsList().stream().reduce(0L, Long::max);
         assertEquals(8, result);

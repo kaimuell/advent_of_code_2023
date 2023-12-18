@@ -29,4 +29,17 @@ public class ArrayUtils {
         return sb.toString();
     }
 
+    public static String toString(boolean[][] booleans) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < booleans.length; i++) {
+            for (int j = 0; j < booleans[i].length; j++) {
+                if(booleans[i][j]) sb.append('#');
+                else sb.append('.');
+            }
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
 }

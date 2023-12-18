@@ -1,3 +1,5 @@
+import utils.Direction;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -119,38 +121,5 @@ public class Day10 {
         }
     }
 
-    enum Direction {
-        NORTH(0, -1), SOUTH(0, 1), WEST(-1, 0), EAST(1, 0);
 
-        private final int x;
-        private final int y;
-
-        Direction(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        Direction getOppositeDirection() {
-            switch (this) {
-                case NORTH -> {
-                    return SOUTH;
-                }
-                case SOUTH -> {
-                    return NORTH;
-                }
-                case EAST -> {
-                    return WEST;
-                }
-                case WEST -> {
-                    return EAST;
-                }
-                default -> throw new IllegalStateException("Unexpected value: " + this);
-            }
-        }
-
-        Point addPoint(Point p) {
-            return new Point(p.x + this.x, p.y + this.y);
-        }
-
-    }
 }
