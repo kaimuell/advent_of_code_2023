@@ -35,4 +35,39 @@ public enum Direction {
             return new Point(p.x + this.x, p.y + this.y);
         }
 
+        public Direction rotate(Rotation rotation){
+            if (rotation.equals(Rotation.CLOCKWISE)){
+                switch (this){
+                    case EAST -> {
+                        return SOUTH;
+                    }
+                    case SOUTH -> {
+                        return WEST;
+                    }
+                    case WEST -> {
+                        return NORTH;
+                    }
+                    case NORTH -> {
+                        return EAST;
+                    }
+                }
+            }else {
+                switch (this){
+                    case NORTH -> {
+                        return WEST;
+                    }
+                    case WEST -> {
+                        return SOUTH;
+                    }
+                    case SOUTH -> {
+                        return EAST;
+                    }
+                    case EAST -> {
+                        return NORTH;
+                    }
+                }
+            }
+            throw new IllegalStateException("State should never be reached");
+        }
+
 }
